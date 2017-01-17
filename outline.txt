@@ -1,0 +1,103 @@
+Building offline-first PWAs
+
+What is a PWA?
+	Progressive
+		works for all users
+		new features unlocked as browser supports them
+	Progressive Enhancement
+	App like
+	instant loading (no installation)
+	offline support
+	push notifications
+	auto updates
+	add to home screen
+	no propietary app stores
+
+Key features
+	Web app manifest
+	Add to Home Screen banner
+	Service Worker
+	Push Notifications
+
+It's important to remember that Progressive Web Apps work everywhere but are supercharged in modern browsers. Progressive enhancement is a backbone of the model.
+
+Background Sync
+
+// Register your service worker:
+navigator.serviceWorker.register('/sw.js');
+
+// Then later, request a one-off sync:
+navigator.serviceWorker.ready.then(function(swRegistration) {
+	return swRegistration.sync.register('myFirstSync');
+});
+Then listen for the event in /sw.js:
+
+self.addEventListener('sync', function(event) {
+	if (event.tag == 'myFirstSync') {
+		event.waitUntil(doSomeStuff());
+	}
+});
+
+Progressive enhancement
+
+It’ll be a while before all browsers support background sync, especially as Safari and Edge don’t yet support service workers. But progressive enhancement helps here:
+
+if ('serviceWorker' in navigator && 'SyncManager' in window) {
+  navigator.serviceWorker.ready.then(function(reg) {
+    return reg.sync.register('tag-name');
+  }).catch(function() {
+    // system was unable to register for a sync,
+    // this could be an OS-level restriction
+    postDataFromThePage();
+  });
+} else {
+  // serviceworker/sync not supported
+  postDataFromThePage();
+}
+
+Notifications can support actions - https://developers.google.com/web/updates/2016/01/notification-actions
+
+Resources
+
+http://webagility.com/posts/building-a-progressive-web-app-part-1-background-and-back-end?utm_source=mobilewebweekly&utm_medium=email
+
+https://developers.google.com/web/updates/2015/12/getting-started-pwa
+
+Application shell - https://github.com/GoogleChrome/application-shell
+
+Polymer starter kit - https://github.com/polymerelements/polymer-starter-kit
+
+Web start kit - https://github.com/google/web-starter-kit
+
+Background Sync - https://developers.google.com/web/updates/2015/12/background-sync
+
+Manifest - https://cloudfour.com/thinks/hey-hey-cloud-four-is-a-pwa/
+
+Manifest file
+{
+	"name": "",
+	"short_name": "",
+	"description": "",
+	"icons": [
+	{
+		"src": "/android-chrome-192x192.png",
+		"sizes": "192x192",
+		"type": "image/png"
+	},
+	{
+		"src": "/android-chrome-512x512.png",
+		"sizes": "512x512",
+		"type": "image/png"
+	}
+	],
+	"theme_color": "#456BD9",
+	"background_color": "#456BD9",
+	"display": "standalone",
+	"orientation": "natural",
+	"start_url": "/",
+	"gcm_sender_id": "" //needed for PWA
+}
+
+Push notification service
+	- One Signal - https://onesignal.com/
+		- supports Safari's non-standard push notifications
