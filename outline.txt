@@ -18,6 +18,7 @@ Key features
 	Add to Home Screen banner
 	Service Worker
 	Push Notifications
+	https only
 
 It's important to remember that Progressive Web Apps work everywhere but are supercharged in modern browsers. Progressive enhancement is a backbone of the model.
 
@@ -39,6 +40,10 @@ self.addEventListener('sync', function(event) {
 });
 
 Progressive enhancement
+	enabling as much functionality as a user is able to experience
+	developing websites so they don't break because of an unsupported feature
+	JavaScript example for print link
+	JavaScript example for enhanced select box
 
 It’ll be a while before all browsers support background sync, especially as Safari and Edge don’t yet support service workers. But progressive enhancement helps here:
 
@@ -73,6 +78,8 @@ Background Sync - https://developers.google.com/web/updates/2015/12/background-s
 
 Manifest - https://cloudfour.com/thinks/hey-hey-cloud-four-is-a-pwa/
 
+Building Progressive Web Apps - Tal Alter
+
 Manifest file
 {
 	"name": "",
@@ -101,3 +108,27 @@ Manifest file
 Push notification service
 	- One Signal - https://onesignal.com/
 		- supports Safari's non-standard push notifications
+
+
+add file to cache
+
+self.addEventListener('install' function(event) {
+	event.waitUntil(
+		caches.open('my-cache').then(function(cache) {
+			return cache.add('/fileToCache.html');
+		})
+	);
+})
+
+if caches.open doesn't find a cache named my-cache it will create it and then return it wrapped in a Promise
+
+retrieve the file from cache
+
+
+self.addEventListener('fetch' function(event) {
+	event.respondWith(
+		fetch(event.request).catch(function() {
+			return caches.match('/fileToCache.html');
+		})
+	);
+})
