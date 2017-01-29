@@ -1,5 +1,39 @@
 Building offline-first PWAs
 
+Agenda
+What is a Proressive Web App?
+How to build one?
+Good WebApp
+Data on the Screen, quickly
+Precache the App Shell
+Cache app data
+Add to Home Screen
+
+Building Native Software is hard
+	iOS, Android, Blackberry? What happens with users who don't have the app
+	wapo.com/pwa
+
+What's missing from a mobile website?
+	Reliable performance
+	Push notifications
+
+Service worker is a client side proxy written in JavaScript
+
+Service worker support
+	55.83% http://caniuse.com/#feat=serviceworkers
+	Chrome
+	Firefox
+	Opera
+	Samsung Internet Browser
+
+No support
+	IE (never)
+	Edge (in development)
+	Safari (Under consideration)
+
+Separate date from the app shell
+Get data on the screen, quickly, even if app shell
+
 What is a PWA?
 	Progressive
 		works for all users
